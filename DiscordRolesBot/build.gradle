@@ -1,3 +1,7 @@
+plugins {
+  id("com.gradleup.shadow") version "9.2.2"
+}
+
 apply plugin: 'java-library'
 apply plugin: 'application'
 
@@ -6,31 +10,14 @@ mainClassName = 'net.carolinaphoenix.discordrolesbot.DiscordRolesBot'
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
 
-configurations {
-    myRun.extendsFrom implementation
-}
-
-jar {
-	from {
-		(configurations.myRun).filter( {! (it.name =~ /.*\.pom/ )}).collect {
-			it.isDirectory() ? it : zipTree(it)
-		}
-	}
-	manifest {
-		attributes("Main-Class": mainClassName )
-	}
-	archiveBaseName = 'rolesbot'
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-
-
 repositories {
     jcenter()
 }
 
 dependencies {
-	implementation group: 'net.dv8tion', name: 'JDA', version: '4.2.0_228'
+	//implementation group: 'net.dv8tion', name: 'JDA', version: '4.2.0_247'
+
+    implementation files('libs/JDA-4.2.0_247-withDependencies.jar')
 	
 	implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 	implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.28.Final' // ORM
